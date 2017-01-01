@@ -1,6 +1,7 @@
 // Pilotage direct du 28BYJ-48
 // Utilisé pour comprendre comment fonctionne le driver Arduino
 // Code extrait de http://4tronix.co.uk/arduino/Stepper-Motors.php
+// A transformer sous forme de fonctions
 //
 // This Arduino example demonstrates bidirectional operation of a 
 // 28BYJ-48, using a ULN2003 interface board to drive the stepper.
