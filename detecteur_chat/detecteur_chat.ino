@@ -5,7 +5,7 @@
 
 #include <EEPROM.h>
 #define RAZ_COMPTEUR
- 
+
 int ledPin = 13;                // choose the pin for the LED
 int inputPin = 2;               // choose the input pin (for PIR sensor)
 int pirState = LOW;             // we start, assuming no motion detected
@@ -14,7 +14,7 @@ int nombre_passages_kowloon; // Nombre de fois où Kowloon est passé devant sa 
 int temps = 0;
 char affichage[100];
 int temps_lu;
- 
+
 void setup() {
   pinMode(ledPin, OUTPUT);      // declare LED as output
   pinMode(inputPin, INPUT);     // declare sensor as input
@@ -33,10 +33,10 @@ void loop(){
   nombre_passages_kowloon = EEPROM.read(1);
   sprintf(affichage, "Kowloon a bougé à %d secondes pour la %d ème fois", temps_lu, nombre_passages_kowloon);
   Serial.println(affichage);
-  
+
   val = digitalRead(inputPin);  // read input value
   //Serial.println(val);
-  
+
   if (val == HIGH) {            // check if the input is HIGH
     digitalWrite(ledPin, HIGH);  // turn LED ON
     if (pirState == LOW) {
@@ -49,7 +49,7 @@ void loop(){
       nombre_passages_kowloon ++;
       Serial.println(nombre_passages_kowloon);
       EEPROM.write(0, temps);
-      EEPROM.write(1, nombre_passages_kowloon); 
+      EEPROM.write(1, nombre_passages_kowloon);
     }
   } else {
     digitalWrite(ledPin, LOW); // turn LED OFF
@@ -61,8 +61,7 @@ void loop(){
       digitalWrite(7,LOW);
     }
   }
-
+  
   delay (1000);
   temps++;
 }
-
