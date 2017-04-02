@@ -1,6 +1,5 @@
 // Projet de détection d'humidité dans un petit pot de fleurs.
 // Fichier: capteur_humi.ino
-// Lien github: https://github.com/franztrierweiler/apprentissage_arduino/capteur_humi
 //
 // A lire pour comprendre:
 // Pour la première version du programme, le Funduino va envoyer les valeurs au PC par
