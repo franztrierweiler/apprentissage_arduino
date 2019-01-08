@@ -1,3 +1,5 @@
+#include <IRremote.h>
+
 #define LAMPE 9
 #define INTERRUPTEUR_LAMPE 2
 #define INTERRUPTEUR_CHAUFFAGE_BLEU 4
@@ -10,6 +12,10 @@ int etat_chauffage_rouge = 0;
 int etat_chauffage_bleu = 0;
 int sensorVal;
 
+int RECV_PIN = 11;
+IRrecv irrecv(RECV_PIN);
+decode_results results;
+
 void setup() {
   //configure pin2 as an input and enable the internal pull-up resistor
   pinMode(INTERRUPTEUR_LAMPE, INPUT_PULLUP);
@@ -19,9 +25,33 @@ void setup() {
   pinMode(LAMPE, OUTPUT);
   pinMode(LED_BLEUE, OUTPUT);
   pinMode(LED_ROUGE, OUTPUT);
+
+  irrecv.enableIRIn(); // Start the receiver
+  Serial.begin(9600);
 }
 
 void loop() {
+
+  if (irrecv.decode(&results)) {
+    Serial.println(results.value, HEX);
+    if (results.value != 0) {
+      Serial.println("appui");
+
+      digitalWrite(13, HIGH);
+      if (etat_lampe == 0)
+      {
+        digitalWrite(LAMPE, HIGH);
+        etat_lampe = 1;
+      }
+      else if (etat_lampe == 1)
+      {
+        digitalWrite(LAMPE, LOW);
+        etat_lampe = 0;
+      }
+    }
+    irrecv.resume(); // Receive the next value
+  }
+  delay(100);
   
   // lecture de l'interrupteur de lampe
   sensorVal = digitalRead(INTERRUPTEUR_LAMPE);
