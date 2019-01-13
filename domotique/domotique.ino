@@ -34,8 +34,10 @@ void loop() {
 
   if (irrecv.decode(&results)) {
     Serial.println(results.value, HEX);
-    if (results.value != 0) {
-      Serial.println("appui");
+
+    // LAMPE
+    if (results.value == 0xFF629D) {
+      Serial.println("appui lampe");
 
       digitalWrite(13, HIGH);
       if (etat_lampe == 0)
@@ -49,6 +51,41 @@ void loop() {
         etat_lampe = 0;
       }
     }
+
+    // CHAUFFAGE BLEU
+    if (results.value == 0xFFA25D) {
+      Serial.println("appui chauffage bleu");
+
+      digitalWrite(13, HIGH);
+      if (etat_chauffage_bleu == 0)
+      {
+        digitalWrite(LED_BLEUE, HIGH);
+        etat_chauffage_bleu = 1;
+      }
+      else if (etat_chauffage_bleu == 1)
+      {
+        digitalWrite(LED_BLEUE, LOW);
+        etat_chauffage_bleu = 0;
+      }
+    }
+
+      // CHAUFFAGE ROUGE
+    if (results.value == 0xFFE21D) {
+      Serial.println("appui chauffage rouge");
+
+      digitalWrite(13, HIGH);
+      if (etat_chauffage_rouge == 0)
+      {
+        digitalWrite(LED_ROUGE, HIGH);
+        etat_chauffage_rouge = 1;
+      }
+      else if (etat_chauffage_rouge == 1)
+      {
+        digitalWrite(LED_ROUGE, LOW);
+        etat_chauffage_rouge = 0;
+      }
+    }
+      
     irrecv.resume(); // Receive the next value
   }
   delay(100);
